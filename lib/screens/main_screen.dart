@@ -9,12 +9,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  ApiConnection _connection = ApiConnection();
 
+  final ApiConnection _connection = ApiConnection();
   List imgList;
 
   @override
   void initState() {
+    super.initState();
     fillList();
   }
 

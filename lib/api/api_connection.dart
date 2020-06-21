@@ -16,7 +16,6 @@ class ApiConnection{
       }
     );
     print(response.statusCode);
-    List lista = [];
     if(response.statusCode == 200) {
       var responseObject = json.decode(response.body);
       //print(responseObject['data']);

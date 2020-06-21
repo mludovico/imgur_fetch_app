@@ -3,7 +3,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class ImageCard extends StatelessWidget {
 
-  String url;
+  final String url;
 
   ImageCard({this.url});
 
