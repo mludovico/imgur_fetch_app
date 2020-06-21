@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:imgurfetchapp/api/api_connection.dart';
 import 'package:imgurfetchapp/widgets/img_card.dart';
 
@@ -21,8 +20,9 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
+    return CupertinoPageScaffold(
+      backgroundColor: CupertinoColors.white,
+      child: FutureBuilder(
         future: _connection.getImages(1),
         builder: (context, snapshot){
           switch(snapshot.connectionState){
@@ -35,23 +35,44 @@ class _MainScreenState extends State<MainScreen> {
             default:
               if(snapshot.hasError)
                 return Center(
-                  child: Text('Verifique sua conexão de internet'),
+                  child: Text(
+                    'Não foi possível obter imagens\nVerifique sua conexão de internet',
+                    style: TextStyle(
+                        color: CupertinoColors.black,
+                        fontSize: 17,
+                        decoration: TextDecoration.none
+                    ),
+                  ),
+                );
+              else if(snapshot.data.length < 1)
+                return Center(
+                  child: Text(
+                    'Nenhuma imagem disponível',
+                    style: TextStyle(
+                      color: CupertinoColors.black,
+                      fontSize: 17,
+                      decoration: TextDecoration.none
+                    ),
+                  ),
                 );
               else
-                return GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3
+                    ),
+                    padding: EdgeInsets.all(15),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ImageCard(
+                          url: snapshot.data[index],
+                        ),
+                      );
+                    }
                   ),
-                  padding: EdgeInsets.all(15),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index){
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ImageCard(
-                        url: snapshot.data[index],
-                      ),
-                    );
-                  }
                 );
               break;
           }
