@@ -12,7 +12,7 @@ class ImageCard extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(5)),
       child: FadeInImage.memoryNetwork(
-        fadeInDuration: Duration(seconds: 2),
+        fadeInDuration: Duration(seconds: 1),
         placeholder: kTransparentImage,
         image: url,
         fit: BoxFit.cover,
